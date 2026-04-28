@@ -62,7 +62,7 @@ export const Hero = () => {
         </div>
 
         <div className="relative mx-auto w-full max-w-sm animate-fade-up md:max-w-md" style={{ animationDelay: "120ms" }}>
-          <PhoneScanIllustration />
+          <EspigaProductsIllustration />
         </div>
       </div>
     </section>
