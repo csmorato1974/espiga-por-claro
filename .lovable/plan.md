@@ -1,31 +1,8 @@
-## Cambios al Header y al Hero
+## Footer — alinear con "La Espiga por Claro"
 
-### 1. Header — actualizar branding
-En `src/components/landing/Header.tsx`, reemplazar el bloque de logos `Claro × Espiga` por:
+En `src/components/landing/Footer.tsx`:
 
-```
-[EspigaLogo]  por  [ClaroLogo]
-```
+1. Cambiar el orden de logos a `[EspigaLogo] por [ClaroLogo]` (mismo patrón que el Header), reemplazando el `×` por la palabra "por" en muted.
+2. Cambiar el copy de la nota legal: `"Campaña conjunta La Espiga × Claro..."` → `"Campaña La Espiga por Claro..."`.
 
-Lectura: "La Espiga por Claro". Mantener tamaños actuales (`h-6 sm:h-7`) y la palabra "por" en gris/muted.
-
-### 2. Hero — nueva ilustración alusiva a La Espiga
-Reemplazar `PhoneScanIllustration` por un nuevo componente **`EspigaProductsIllustration`** que evoque el consumo de productos de panadería de La Espiga, manteniendo el guiño a la conectividad Claro.
-
-**Archivos:**
-- Crear `src/components/landing/EspigaProductsIllustration.tsx`
-- Editar `src/components/landing/Hero.tsx` (cambiar import y uso)
-- Eliminar `src/components/landing/PhoneScanIllustration.tsx` y `src/components/landing/QrPlaceholder.tsx` (ya no se usan en ningún sitio)
-
-**Diseño de la nueva ilustración (SVG/emoji + Tailwind, sin imágenes externas):**
-- Una **bolsa de papel kraft** (estilo panadería) en el centro, con el rótulo "La Espiga" y una espiga de trigo estilizada
-- Sobresaliendo de la bolsa: una **baguette** y un **pan redondo** dibujados con SVG simples
-- Una **taza de café humeante** flotando a un lado
-- Chips flotantes que conectan el contexto con la promo:
-  - "🥖 +S/30 en La Espiga"
-  - "📶 Internet desde S/30"
-- Glow de fondo con `bg-gradient-warm` (tonos cream/gold) para reforzar la identidad espiga
-- Pequeñas espigas de trigo decorativas alrededor
-- Animación sutil: `animate-fade-up` y un ligero `animate-pulse` en el vapor del café
-
-Resultado: el Hero deja de mostrar un celular escaneando y muestra el universo La Espiga (pan, café, bolsa) conectado visualmente al beneficio Claro mediante los chips.
+Nota: el footer actual no tiene botones CTA (solo logos + nota legal). Si esperabas además un CTA tipo botón en el footer, avísame y lo agrego.
