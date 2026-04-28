@@ -1,7 +1,7 @@
 import { MessageCircle, ChevronDown, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { buildWhatsAppLink, trackWhatsAppClick } from "@/lib/whatsapp";
-import { PhoneScanIllustration } from "./PhoneScanIllustration";
+import { EspigaProductsIllustration } from "./EspigaProductsIllustration";
 
 export const Hero = () => {
   return (
@@ -62,7 +62,7 @@ export const Hero = () => {
         </div>
 
         <div className="relative mx-auto w-full max-w-sm animate-fade-up md:max-w-md" style={{ animationDelay: "120ms" }}>
-          <PhoneScanIllustration />
+          <EspigaProductsIllustration />
         </div>
       </div>
     </section>
