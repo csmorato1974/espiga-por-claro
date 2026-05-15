@@ -10,7 +10,7 @@ export const Plans = () => {
       <div className="container px-4">
         <div className="mx-auto max-w-2xl text-center">
           <p className="text-xs font-bold uppercase tracking-widest text-primary">Elige tu plan</p>
-          <h2 className="mt-2 text-3xl font-extrabold sm:text-4xl">Tres planes Claro pensados para ti</h2>
+          <h2 className="mt-2 text-3xl font-extrabold sm:text-4xl">Tres planes Inkacel pensados para ti</h2>
           <p className="mt-3 text-muted-foreground">
             Precios referenciales. Un asesor confirmará disponibilidad y cobertura por WhatsApp.
           </p>
@@ -28,7 +28,7 @@ export const Plans = () => {
               )}
             >
               {plan.highlighted && (
-                <div className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-gradient-claro px-3 py-1 text-[11px] font-bold uppercase tracking-wider text-primary-foreground shadow-claro">
+                <div className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-gradient-brand px-3 py-1 text-[11px] font-bold uppercase tracking-wider text-primary-foreground shadow-brand">
                   <Star className="mr-1 inline h-3 w-3" /> Más elegido
                 </div>
               )}
@@ -57,7 +57,7 @@ export const Plans = () => {
                 className={cn(
                   "mt-6 h-11 w-full",
                   plan.highlighted
-                    ? "bg-primary text-primary-foreground hover:bg-primary-dark shadow-claro"
+                    ? "bg-primary text-primary-foreground hover:bg-primary-dark shadow-brand"
                     : "bg-foreground text-background hover:bg-foreground/90",
                 )}
               >

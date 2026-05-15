@@ -4,7 +4,7 @@ import { buildWhatsAppLink, trackWhatsAppClick } from "@/lib/whatsapp";
 
 export const FinalCTA = () => {
   return (
-    <section className="relative overflow-hidden bg-gradient-claro py-16 text-primary-foreground sm:py-24">
+    <section className="relative overflow-hidden bg-gradient-brand py-16 text-primary-foreground sm:py-24">
       <div className="absolute inset-0 opacity-20" aria-hidden>
         <div className="absolute -left-10 top-10 h-40 w-40 rounded-full bg-primary-foreground/30 blur-3xl" />
         <div className="absolute -right-10 bottom-10 h-56 w-56 rounded-full bg-espiga-gold/40 blur-3xl" />

@@ -16,14 +16,14 @@ export const Hero = () => {
 
           <h1 className="mt-4 text-4xl font-extrabold leading-[1.05] text-foreground sm:text-5xl md:text-6xl">
             Internet desde{" "}
-            <span className="bg-gradient-claro bg-clip-text text-transparent">S/30</span>{" "}
+            <span className="bg-gradient-brand bg-clip-text text-transparent">S/30</span>{" "}
             para clientes de La Espiga
           </h1>
 
           <p className="mt-4 max-w-xl text-base leading-relaxed text-muted-foreground sm:text-lg">
             Escanea, elige tu plan y recibe atención inmediata por WhatsApp.{" "}
             <span className="font-semibold text-foreground">
-              Además, al contratar tu paquete Claro, te llevas S/30 de consumo gratis en La Espiga.
+              Además, al contratar tu paquete Inkacel, te llevas S/30 de consumo gratis en La Espiga.
             </span>
           </p>
 
@@ -31,7 +31,7 @@ export const Hero = () => {
             <Button
               asChild
               size="lg"
-              className="h-12 bg-primary text-primary-foreground shadow-claro hover:bg-primary-dark"
+              className="h-12 bg-primary text-primary-foreground shadow-brand hover:bg-primary-dark"
             >
               <a
                 href={buildWhatsAppLink("general")}

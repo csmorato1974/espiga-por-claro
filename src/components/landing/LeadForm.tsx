@@ -105,7 +105,7 @@ export const LeadForm = () => {
         <Button
           asChild
           size="lg"
-          className="mt-6 h-12 w-full bg-primary text-primary-foreground hover:bg-primary-dark shadow-claro sm:w-auto"
+          className="mt-6 h-12 w-full bg-primary text-primary-foreground hover:bg-primary-dark shadow-brand sm:w-auto"
         >
           <a
             href={link}
@@ -202,7 +202,7 @@ export const LeadForm = () => {
         type="submit"
         size="lg"
         disabled={form.formState.isSubmitting}
-        className="mt-6 h-12 w-full bg-primary text-primary-foreground hover:bg-primary-dark shadow-claro"
+        className="mt-6 h-12 w-full bg-primary text-primary-foreground hover:bg-primary-dark shadow-brand"
       >
         {form.formState.isSubmitting ? (
           <>

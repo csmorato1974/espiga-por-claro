@@ -1,4 +1,4 @@
-import { ClaroLogo, EspigaLogo } from "./Logos";
+import { InkacelLogo, EspigaLogo } from "./Logos";
 
 export const Footer = () => {
   return (
@@ -7,10 +7,10 @@ export const Footer = () => {
         <div className="flex items-center gap-2">
           <EspigaLogo className="h-6" />
           <span className="text-sm font-semibold text-muted-foreground">por</span>
-          <ClaroLogo className="h-6" />
+          <InkacelLogo className="h-6" />
         </div>
         <p className="max-w-md text-xs text-muted-foreground">
-          Campaña La Espiga por Claro. Promoción válida sujeta a cobertura y validación comercial.
+          Campaña La Espiga por Inkacel. Promoción válida sujeta a cobertura y validación comercial.
           Los precios son referenciales y pueden variar.
         </p>
       </div>

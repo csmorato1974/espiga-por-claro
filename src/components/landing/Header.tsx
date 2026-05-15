@@ -1,7 +1,7 @@
 import { MessageCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { buildWhatsAppLink, trackWhatsAppClick } from "@/lib/whatsapp";
-import { ClaroLogo, EspigaLogo } from "./Logos";
+import { InkacelLogo, EspigaLogo } from "./Logos";
 
 export const Header = () => {
   return (
@@ -10,7 +10,7 @@ export const Header = () => {
         <div className="flex items-center gap-2 sm:gap-3">
           <EspigaLogo className="h-6 sm:h-7" />
           <span className="text-sm font-semibold text-muted-foreground sm:text-base">por</span>
-          <ClaroLogo className="h-6 sm:h-7" />
+          <InkacelLogo className="h-6 sm:h-7" />
         </div>
         <Button
           asChild

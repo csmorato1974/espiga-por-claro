@@ -1,5 +1,5 @@
 /**
- * Campaña: La Espiga × Claro
+ * Campaña: La Espiga por Inkacel
  * --------------------------------------------------------------------------
  * Edita aquí los valores principales de la landing sin tocar componentes.
  * - Número de WhatsApp del asesor comercial (placeholder)
@@ -17,7 +17,7 @@
  */
 
 export const CAMPAIGN = {
-  name: "La Espiga x Claro",
+  name: "La Espiga por Inkacel",
   origen: "QR Display La Espiga",
 
   // 🔧 EDITAR: número real del asesor comercial (formato internacional sin "+")
@@ -30,9 +30,9 @@ export const CAMPAIGN = {
     entrada: "Hola, estoy interesado en el Plan Entrada desde S/30.",
     intensivo: "Hola, estoy interesado en el Plan Intensivo.",
     completo: "Hola, estoy interesado en el Plan Completo.",
-    callback: "Hola, vengo desde la landing La Espiga × Claro. Quisiera que un asesor me llame.",
+    callback: "Hola, vengo desde la landing La Espiga por Inkacel. Quisiera que un asesor me llame.",
     afterLead: (nombre: string, plan: string) =>
-      `Hola, soy ${nombre}. Acabo de dejar mis datos en la landing La Espiga × Claro. Estoy interesado en el ${plan}.`,
+      `Hola, soy ${nombre}. Acabo de dejar mis datos en la landing La Espiga por Inkacel. Estoy interesado en el ${plan}.`,
   },
 } as const;
 
@@ -50,7 +50,7 @@ export interface PlanCard {
   whatsappKey: keyof typeof CAMPAIGN.messages;
 }
 
-// 🔧 PRECIOS PLACEHOLDER — confirmar con Claro antes de publicar
+// 🔧 PRECIOS PLACEHOLDER — confirmar con Inkacel antes de publicar
 export const PLANS: PlanCard[] = [
   {
     id: "entrada",
