@@ -66,6 +66,7 @@ export default {
           tick: "hsl(var(--wa-tick))",
           text: "hsl(var(--wa-text))",
           meta: "hsl(var(--wa-meta))",
+        },
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",
           foreground: "hsl(var(--sidebar-foreground))",
