@@ -1,10 +1,8 @@
 import { CAMPAIGN } from "@/config/campaign";
+import { trackEvent } from "@/lib/analytics";
 
 /**
  * Construye un deep link de WhatsApp con mensaje pre-rellenado.
- * TODO tracking: disparar evento `whatsapp_click` con la `key` recibida
- *   - Google Analytics: gtag('event', 'whatsapp_click', { key })
- *   - Meta Pixel:       fbq('trackCustom', 'WhatsAppClick', { key })
  */
 export function buildWhatsAppLink(
   key: keyof typeof CAMPAIGN.messages = "general",
@@ -15,11 +13,6 @@ export function buildWhatsAppLink(
   return `https://wa.me/${CAMPAIGN.whatsappNumber}?text=${text}`;
 }
 
-export function trackWhatsAppClick(key: string) {
-  // TODO conectar:
-  // window.gtag?.("event", "whatsapp_click", { key });
-  // window.fbq?.("trackCustom", "WhatsAppClick", { key });
-  if (import.meta.env.DEV) {
-    console.info("[tracking] whatsapp_click", { key });
-  }
+export function trackWhatsAppClick(source: string, metadata: Record<string, unknown> = {}) {
+  trackEvent("whatsapp_click", source, metadata);
 }
