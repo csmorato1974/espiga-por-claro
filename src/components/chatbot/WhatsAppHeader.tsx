@@ -1,4 +1,4 @@
-import { ArrowLeft, MoreVertical, Phone, Video } from "lucide-react";
+import { ArrowLeft, MoreVertical } from "lucide-react";
 
 export function WhatsAppHeader() {
   return (
@@ -11,8 +11,6 @@ export function WhatsAppHeader() {
         <p className="truncate text-[15px] font-semibold leading-tight">Asistente La Espiga</p>
         <p className="truncate text-[12px] leading-tight opacity-80">en línea</p>
       </div>
-      <Video className="h-5 w-5 opacity-90" />
-      <Phone className="h-5 w-5 opacity-90" />
       <MoreVertical className="h-5 w-5 opacity-90" />
     </header>
   );
