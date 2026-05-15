@@ -1,6 +1,6 @@
 /**
  * Lee los parámetros UTM de la URL para attribuir el lead a la campaña QR.
- * Por ejemplo: ?utm_source=qr&utm_medium=display&utm_campaign=espiga_claro&local=miraflores
+ * Por ejemplo: ?utm_source=qr&utm_medium=display&utm_campaign=espiga_inkacel&local=miraflores
  */
 export interface UtmParams {
   utm_source: string | null;
