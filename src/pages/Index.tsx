@@ -7,6 +7,7 @@ import { LeadSection } from "@/components/landing/LeadSection";
 import { TrustStrip } from "@/components/landing/TrustStrip";
 import { FinalCTA } from "@/components/landing/FinalCTA";
 import { Footer } from "@/components/landing/Footer";
+import { QRCallout } from "@/components/landing/QRCallout";
 import { FloatingChatbotButton } from "@/components/simulator/FloatingChatbotButton";
 
 const Index = () => {
@@ -18,6 +19,7 @@ const Index = () => {
         <BenefitCard />
         <Plans />
         <HowItWorks />
+        <QRCallout />
         <LeadSection />
         <TrustStrip />
         <FinalCTA />
