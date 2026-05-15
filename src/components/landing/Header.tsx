@@ -16,7 +16,7 @@ export const Header = () => {
           <Button
             asChild
             size="sm"
-            className="bg-primary text-primary-foreground hover:bg-primary-dark shadow-soft"
+            className="bg-wa-brand text-white hover:bg-wa-brand-dark shadow-soft"
           >
           <a
             href={buildWhatsAppLink("general")}

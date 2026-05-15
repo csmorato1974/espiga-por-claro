@@ -25,9 +25,9 @@ export const CAMPAIGN = {
     plan_400:
       "Hola, vengo del QR de La Espiga. Me interesa el plan 1Play 400MB + Repetidor a S/55 promocional.",
     plan_2play_200:
-      "Hola, vengo del QR de La Espiga. Me interesa el plan 2Play 200MB + Claro TV+ a S/75 promocional.",
+      "Hola, vengo del QR de La Espiga. Me interesa el plan 2Play 200MB + TV+ a S/75 promocional.",
     plan_2play_400:
-      "Hola, vengo del QR de La Espiga. Me interesa el plan 2Play 400MB + Claro TV+ + Repetidor a S/85 promocional.",
+      "Hola, vengo del QR de La Espiga. Me interesa el plan 2Play 400MB + TV+ + Repetidor a S/85 promocional.",
     callback:
       "Hola, vengo desde la landing La Espiga por Inkacel. Quisiera que un asesor me llame.",
     afterLead: (nombre: string, plan: string) =>
@@ -85,13 +85,13 @@ export const PLANS: PlanCard[] = [
   },
   {
     id: "plan_2play_200",
-    name: "2Play 200MB + Claro TV+",
+    name: "2Play 200MB + TV+",
     price: "S/75",
     priceNote: "x 4 meses · luego S/150",
     tagline: "Internet + TV con 2 decos",
     bullets: [
       "200MB FTTH (400MB por 6 meses promo)",
-      "Claro TV+ Estándar Pro con 2 decodificadores",
+      "TV+ Estándar Pro con 2 decodificadores",
       "Cargo regular S/150 desde el mes 5",
     ],
     ctaLabel: "Quiero este plan",
@@ -99,13 +99,13 @@ export const PLANS: PlanCard[] = [
   },
   {
     id: "plan_2play_400",
-    name: "2Play 400MB + Claro TV+ + Repetidor",
+    name: "2Play 400MB + TV+ + Repetidor",
     price: "S/85",
     priceNote: "x 4 meses · luego S/170",
     tagline: "El combo completo para alto consumo",
     bullets: [
       "400MB FTTH (1000MB por 12 meses promo)",
-      "Claro TV+ Estándar Pro con 2 decodificadores",
+      "TV+ Estándar Pro con 2 decodificadores",
       "Incluye 1 repetidor WiFi",
       "Cargo regular S/170 desde el mes 5",
     ],
@@ -117,7 +117,7 @@ export const PLANS: PlanCard[] = [
 export const PLAN_LABEL: Record<string, string> = {
   plan_200: "1Play 200MB",
   plan_400: "1Play 400MB + Repetidor",
-  plan_2play_200: "2Play 200MB + Claro TV+",
-  plan_2play_400: "2Play 400MB + Claro TV+ + Repetidor",
+  plan_2play_200: "2Play 200MB + TV+",
+  plan_2play_400: "2Play 400MB + TV+ + Repetidor",
   no_seguro: "el plan que mejor me convenga",
 };

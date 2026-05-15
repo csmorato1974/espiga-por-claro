@@ -197,8 +197,8 @@ export const LeadForm = () => {
             <SelectContent>
               <SelectItem value="plan_200">1Play 200MB (S/39.50 x 4 meses)</SelectItem>
               <SelectItem value="plan_400">1Play 400MB + Repetidor (S/55 x 6 meses)</SelectItem>
-              <SelectItem value="plan_2play_200">2Play 200MB + Claro TV+ (S/75 x 4 meses)</SelectItem>
-              <SelectItem value="plan_2play_400">2Play 400MB + Claro TV+ + Repetidor (S/85 x 4 meses)</SelectItem>
+              <SelectItem value="plan_2play_200">2Play 200MB + TV+ (S/75 x 4 meses)</SelectItem>
+              <SelectItem value="plan_2play_400">2Play 400MB + TV+ + Repetidor (S/85 x 4 meses)</SelectItem>
               <SelectItem value="no_seguro">No estoy seguro</SelectItem>
             </SelectContent>
           </Select>
