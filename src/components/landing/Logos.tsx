@@ -19,6 +19,6 @@ export const EspigaLogo = ({ className }: { className?: string }) => (
   <img
     src={espigaLogo}
     alt="La Espiga"
-    className={cn("inline-block h-16 w-auto select-none object-contain", className)}
+    className={cn("inline-block h-7 w-auto select-none object-contain", className)}
   />
 );
