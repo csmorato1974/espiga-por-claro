@@ -35,6 +35,7 @@ export const Header = () => {
             WhatsApp
           </a>
         </Button>
+        </div>
       </div>
     </header>
   );
