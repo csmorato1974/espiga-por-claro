@@ -18,7 +18,19 @@ export const HowItWorks = () => {
         </div>
 
         <ol className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-// ... keep existing code
+          {STEPS.map((s, i) => (
+            <li
+              key={s.title}
+              className="relative rounded-2xl border border-background/10 bg-background/[0.04] p-5 backdrop-blur"
+            >
+              <div className="flex items-center gap-3">
+                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary text-primary-foreground shadow-brand">
+                  <s.icon className="h-5 w-5" />
+                </div>
+                <span className="text-xs font-bold uppercase tracking-widest text-background/50">
+                  Paso {i + 1}
+                </span>
+              </div>
               <h3 className="mt-4 text-lg font-bold">{s.title}</h3>
               <p className="mt-1.5 text-sm leading-relaxed text-background/70">{s.desc}</p>
             </li>
