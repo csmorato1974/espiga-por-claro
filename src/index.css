@@ -21,26 +21,26 @@
     --popover: 0 0% 100%;
     --popover-foreground: 0 0% 8%;
 
-    /* Inkacel brand */
-    --primary: 322 85% 55%;              /* Inkacel magenta */
-    --primary-foreground: 0 0% 100%;
-    --primary-dark: 322 80% 42%;
-    --primary-glow: 345 90% 70%;
+    /* La Espiga brand — verde principal */
+    --primary: 145 75% 28%;              /* Espiga green */
+    --primary-foreground: 38 55% 96%;
+    --primary-dark: 145 80% 20%;
+    --primary-glow: 140 60% 42%;
 
-    /* La Espiga warm accents */
+    /* La Espiga warm accents (de la espiga del logo) */
     --espiga-cream: 38 55% 94%;
-    --espiga-gold: 38 70% 55%;           /* warm wheat gold */
-    --espiga-wheat: 36 60% 78%;
-    --espiga-coffee: 25 35% 28%;
+    --espiga-gold: 45 95% 55%;           /* amarillo espiga */
+    --espiga-wheat: 28 90% 55%;          /* naranja espiga */
+    --espiga-coffee: 8 70% 45%;          /* rojo espiga */
 
     --secondary: 38 55% 94%;             /* cream */
-    --secondary-foreground: 25 35% 22%;
+    --secondary-foreground: 145 60% 18%;
 
-    --muted: 30 20% 94%;
-    --muted-foreground: 25 10% 38%;
+    --muted: 38 30% 93%;
+    --muted-foreground: 145 15% 32%;
 
-    --accent: 46 95% 58%;                /* Inkacel yellow */
-    --accent-foreground: 0 0% 8%;
+    --accent: 45 95% 55%;                /* amarillo espiga */
+    --accent-foreground: 145 75% 18%;
 
     --destructive: 0 84% 55%;
     --destructive-foreground: 0 0% 100%;
