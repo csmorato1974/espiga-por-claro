@@ -22,7 +22,7 @@ export const FinalCTA = () => {
           <Button
             asChild
             size="lg"
-            className="h-12 bg-card text-foreground hover:bg-card/90"
+            className="h-12 bg-wa-brand text-white hover:bg-wa-brand-dark shadow-brand"
           >
             <a
               href={buildWhatsAppLink("general")}

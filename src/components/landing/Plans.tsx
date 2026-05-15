@@ -55,10 +55,8 @@ export const Plans = () => {
               <Button
                 asChild
                 className={cn(
-                  "mt-6 h-11 w-full",
-                  plan.highlighted
-                    ? "bg-primary text-primary-foreground hover:bg-primary-dark shadow-brand"
-                    : "bg-foreground text-background hover:bg-foreground/90",
+                  "mt-6 h-11 w-full bg-wa-brand text-white hover:bg-wa-brand-dark",
+                  plan.highlighted && "shadow-brand",
                 )}
               >
                 <a

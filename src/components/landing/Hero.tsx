@@ -31,7 +31,7 @@ export const Hero = () => {
             <Button
               asChild
               size="lg"
-              className="h-12 bg-primary text-primary-foreground shadow-brand hover:bg-primary-dark"
+              className="h-12 bg-wa-brand text-white shadow-brand hover:bg-wa-brand-dark"
             >
               <a
                 href={buildWhatsAppLink("general")}
