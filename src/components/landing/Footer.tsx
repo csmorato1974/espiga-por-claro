@@ -5,7 +5,7 @@ export const Footer = () => {
     <footer className="border-t border-border bg-background py-8">
       <div className="container flex flex-col items-center gap-4 px-4 text-center sm:flex-row sm:justify-between sm:text-left">
         <div className="flex items-center gap-2">
-          <EspigaLogo className="h-6" />
+          <EspigaLogo className="h-[4.5rem]" />
           <span className="text-sm font-semibold text-muted-foreground">por</span>
           <InkacelLogo className="h-6" />
         </div>
