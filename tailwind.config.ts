@@ -57,6 +57,15 @@ export default {
           wheat: "hsl(var(--espiga-wheat))",
           coffee: "hsl(var(--espiga-coffee))",
         },
+        wa: {
+          green: "hsl(var(--wa-green))",
+          "green-dark": "hsl(var(--wa-green-dark))",
+          bg: "hsl(var(--wa-bg))",
+          "bubble-out": "hsl(var(--wa-bubble-out))",
+          "bubble-in": "hsl(var(--wa-bubble-in))",
+          tick: "hsl(var(--wa-tick))",
+          text: "hsl(var(--wa-text))",
+          meta: "hsl(var(--wa-meta))",
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",
           foreground: "hsl(var(--sidebar-foreground))",
