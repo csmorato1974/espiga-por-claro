@@ -1,81 +1,70 @@
-# Plan: Chatbot tipo WhatsApp con flujo guiado
+# Plan: Simulador del flujo de conversación
 
-## Alcance
-Nueva ruta `/chatbot` (enlazable desde el landing si se desea más adelante). Una sola conversación por navegador, persistida en Lovable Cloud. UI fiel al estilo WhatsApp (header verde, fondo con patrón, burbujas, hora, doble check, botones rápidos tipo "Quick Reply").
+Voy a entregar las tres piezas integradas en una sola página `/simulador`, más un acceso visible desde el landing.
 
-## Backend (Lovable Cloud)
+## 1. Acceso al chatbot existente
 
-Migración con dos tablas:
+- Añadir un botón "Probar chatbot" en `Header.tsx` (junto al de WhatsApp) que enlace a `/chatbot` con `react-router` `<Link>`.
+- Añadir un botón flotante (burbuja verde, esquina inferior derecha) visible en todo el landing que abra `/chatbot` en una nueva pestaña.
+- No tocar los botones existentes de wa.me — siguen abriendo WhatsApp real como ahora.
 
-- `chat_sessions`
-  - `client_id` (text, único) — UUID generado en el navegador y guardado en `localStorage` para identificar la sesión sin login
-  - `state` (text) — `menu` | `await_direccion` | `await_dni` | `requiere_supervisor` | `finalizado`
-  - `direccion` (text, nullable)
-  - `dni` (text, nullable)
+## 2. Página `/simulador` con tres zonas
 
-- `chat_messages`
-  - `session_id` (uuid → chat_sessions)
-  - `role` (text) — `bot` | `user`
-  - `content` (text)
-  - `kind` (text) — `text` | `menu` | `confirmation` | `error`
+```text
+┌─────────────────────────────────────────────────────┐
+│  Header: título + selector escenario + controles    │
+├──────────────────────┬──────────────────────────────┤
+│                      │  Panel QA                    │
+│  Chat WhatsApp       │  - Estado actual             │
+│  (mismas burbujas    │  - direccion / dni           │
+│   que /chatbot)      │  - Historial JSON            │
+│                      │  - Botones forzar transición │
+│                      │  - Reiniciar / Exportar      │
+└──────────────────────┴──────────────────────────────┘
+```
 
-RLS: acceso público anónimo restringido por `client_id` (se filtra en cliente; insert/select abiertos a `anon` con `client_id` enviado en el payload). Sin auth — coherente con el patrón actual de `leads`.
+En móvil se apila: chat arriba, panel QA en un acordeón debajo.
 
-## Frontend
+### Modo automático (demo paso a paso)
 
-### Archivos nuevos
-- `src/pages/Chatbot.tsx` — página standalone con la UI del chat
-- `src/components/chatbot/WhatsAppHeader.tsx` — header verde, avatar "Claro Bot", estado "en línea"
-- `src/components/chatbot/MessageBubble.tsx` — burbuja con cola, hora, doble check
-- `src/components/chatbot/QuickReplyButtons.tsx` — botones rápidos bajo el último mensaje del bot
-- `src/components/chatbot/ChatInput.tsx` — input inferior estilo WhatsApp (deshabilitado cuando solo hay botones)
-- `src/lib/chatbot/flow.ts` — máquina de estados pura (sin React) con la lógica de transiciones, validaciones y mensajes
-- `src/lib/chatbot/config.ts` — constantes: longitud DNI (default 8), copys, opciones del menú
-- `src/hooks/useChatbot.ts` — orquesta sesión, carga histórica, envío y persistencia
+- Selector de escenario con 4 presets:
+  - **Cobertura completa**: usuario elige opción 1 → escribe dirección válida → vuelve al menú.
+  - **Cobertura con error**: usuario elige opción 1 → escribe "abc" (corta) → reintenta con dirección válida.
+  - **Planes con DNI**: opción 2 → DNI inválido → DNI válido de 8 dígitos.
+  - **Escala a supervisor**: opción 3 directa, y otro escenario que escribe "supervisor" en medio del flujo.
+- Controles: **Play / Pause / Paso siguiente / Reiniciar / Velocidad (1x, 2x, 4x)**.
+- El simulador llama directamente a `handleQuickReply` y `handleUserText` de `src/lib/chatbot/flow.ts` con un delay configurable entre pasos. Muestra un indicador "escribiendo…" antes de cada mensaje del bot.
+- **No persiste en Supabase** — corre 100% en memoria para que se pueda repetir sin ensuciar la base de datos. Esto lo diferencia del chatbot real de `/chatbot`.
 
-### Diseño
-- Tokens nuevos en `index.css` y `tailwind.config.ts`: `--whatsapp-green`, `--whatsapp-green-dark`, `--whatsapp-bg`, `--whatsapp-bubble-out`, `--whatsapp-bubble-in`, `--whatsapp-tick`. HSL.
-- Fondo con patrón tenue (SVG inline doodle WhatsApp-like)
-- Responsive: en móvil ocupa toda la pantalla; en desktop, marco centrado tipo "teléfono" max-w-md con sombra
+### Panel QA (lateral derecho)
 
-## Lógica del flujo (`flow.ts`)
+- **Estado actual** (badge): `menu` / `await_direccion` / `await_dni` / `requiere_supervisor`.
+- **Campos guardados**: `direccion`, `dni` (en vivo).
+- **Historial JSON**: array de `{role, content, kind, ts}` con scroll, monospace.
+- **Forzar transición**: 4 botones que setean el estado manualmente sin pasar por el flujo (útil para QA de mensajes específicos).
+- **Inyectar texto libre**: input que dispara `handleUserText` con el estado actual — para probar entradas raras (vacío, solo espacios, palabras clave, etc.).
+- **Exportar transcript**: botón que descarga el historial como `.json`.
+- **Reiniciar**: limpia estado y mensajes.
 
-Estado inicial → bot envía saludo + menú con 3 botones:
-1. Validar cobertura y ofertas
-2. Consultar planes con DNI
-3. Hablar con un supervisor
+## 3. Detalles técnicos
 
-Manejo:
-- Botón 1 → estado `await_direccion`, mensaje pidiendo dirección + botón "Volver al menú"
-  - Validar `trim().length > 0` (mín 5 chars). Error: "La dirección no puede estar vacía. Inténtalo de nuevo."
-  - OK → guardar `direccion`, confirmar: "Recibimos tu dirección: *<dir>*. Un asesor revisará la cobertura disponible y se comunicará contigo." → reenvía menú
-- Botón 2 → `await_dni`, pide DNI + botón "Volver al menú"
-  - Validar `/^\d{8}$/` (longitud configurable en `config.ts`). Error: "El DNI debe tener 8 dígitos numéricos."
-  - OK → guardar `dni`, confirmar: "Gracias. Validaremos los planes disponibles para el DNI *<dni>*." → reenvía menú
-- Botón 3 → estado `requiere_supervisor`, mensaje de derivación, deshabilita input. Botón "Volver al menú" disponible.
+**Archivos nuevos:**
+- `src/pages/Simulador.tsx` — página principal con layout 2 columnas.
+- `src/components/simulator/ScenarioRunner.tsx` — motor de auto-play con `setTimeout`/refs.
+- `src/components/simulator/QAPanel.tsx` — panel lateral.
+- `src/components/simulator/scenarios.ts` — definición de los 4 presets como secuencias `[{type:'quick', id:'cobertura'}, {type:'text', value:'Av. Arequipa 123'}, ...]`.
+- `src/components/landing/FloatingChatbotButton.tsx` — burbuja flotante.
 
-Reglas globales:
-- Texto libre fuera de un estado de captura → "No entendí tu mensaje. Te muestro el menú principal." + menú
-- Palabras clave `supervisor`, `asesor`, `humano` en cualquier momento → escala a flujo 3
-- Botón "Volver al menú" siempre visible en estados de captura
+**Archivos editados:**
+- `src/App.tsx` — registrar ruta `/simulador`.
+- `src/components/landing/Header.tsx` — añadir link "Probar chatbot".
+- `src/pages/Index.tsx` — montar el botón flotante.
 
-## Persistencia
+**Reutilización:**
+- Las burbujas, quick replies y header de WhatsApp se reusan tal cual desde `src/components/chatbot/`.
+- La lógica de `flow.ts` se usa sin modificar — confirma que es portable a un edge function/webhook.
 
-`useChatbot`:
-1. Al montar: lee `client_id` de localStorage (genera uno si no existe), busca/crea `chat_sessions`, carga `chat_messages` ordenados
-2. Cada mensaje (user o bot) → insert en `chat_messages`
-3. Cada cambio de estado → update `chat_sessions`
-4. Si la sesión ya estaba en `requiere_supervisor`, mantiene UI escalada al recargar
-
-## Preparado para webhook futuro
-- `flow.ts` exporta función pura `nextStep(state, input) → { newState, messages, persistFields }`. Cualquier integración futura (edge function que llame a CRM/WhatsApp Business API) reusará esta función.
-- Estructura de `chat_messages` ya compatible con formato típico de WhatsApp (role, content, timestamp).
-
-## Verificación
-- Build limpio
-- Probar los 3 flujos, validaciones (dirección vacía, DNI no numérico/longitud incorrecta), recarga preserva estado, palabra clave "supervisor" escala, botón "Volver al menú" funciona, responsive en móvil
-
-## Lo que NO se hace
-- No se conecta aún a WhatsApp Business API real (se deja la arquitectura lista)
-- No se modifica el landing actual ni `leads`
-- No se agregan auth ni roles
+**Sin cambios en:**
+- Base de datos (no se necesitan migraciones).
+- `useChatbot.ts` (sigue siendo el hook del chatbot real persistido).
+- Botones existentes de wa.me en el landing.
