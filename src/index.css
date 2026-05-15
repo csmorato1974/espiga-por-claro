@@ -70,6 +70,16 @@
     --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
     --transition-base: 200ms var(--ease-out);
 
+    /* WhatsApp chatbot tokens */
+    --wa-green: 142 70% 29%;
+    --wa-green-dark: 142 75% 22%;
+    --wa-bg: 60 17% 91%;
+    --wa-bubble-out: 88 56% 88%;
+    --wa-bubble-in: 0 0% 100%;
+    --wa-tick: 200 85% 50%;
+    --wa-text: 0 0% 11%;
+    --wa-meta: 0 0% 45%;
+
     --sidebar-background: 0 0% 98%;
     --sidebar-foreground: 240 5.3% 26.1%;
     --sidebar-primary: 240 5.9% 10%;
