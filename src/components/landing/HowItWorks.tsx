@@ -2,7 +2,7 @@ import { QrCode, Layers, ClipboardList, MessageCircle } from "lucide-react";
 
 const STEPS = [
   { icon: QrCode, title: "Escanea el QR", desc: "El cliente encuentra el display en La Espiga y escanea el código." },
-  { icon: Layers, title: "Elige su plan", desc: "Revisa la oferta Claro y selecciona el paquete de interés." },
+  { icon: Layers, title: "Elige su plan", desc: "Revisa la oferta Inkacel y selecciona el paquete de interés." },
   { icon: ClipboardList, title: "Deja sus datos", desc: "El sistema registra el lead para seguimiento comercial." },
   { icon: MessageCircle, title: "Atención por WhatsApp", desc: "Un asesor confirma cobertura, resuelve dudas y gestiona la instalación." },
 ];
@@ -24,7 +24,7 @@ export const HowItWorks = () => {
               className="relative rounded-2xl border border-background/10 bg-background/[0.04] p-5 backdrop-blur"
             >
               <div className="flex items-center gap-3">
-                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary text-primary-foreground shadow-claro">
+                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary text-primary-foreground shadow-brand">
                   <s.icon className="h-5 w-5" />
                 </div>
                 <span className="text-xs font-bold uppercase tracking-widest text-background/50">

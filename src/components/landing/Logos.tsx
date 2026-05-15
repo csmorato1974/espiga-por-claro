@@ -1,19 +1,17 @@
 import { cn } from "@/lib/utils";
+import inkacelLogo from "@/assets/inkacel-logo.png";
 
 /**
- * Logotipos placeholder (SVG inline, sin assets externos).
- * Se pueden reemplazar por SVGs/PNGs oficiales del cliente más adelante.
+ * Logotipos de marca.
+ * - InkacelLogo usa el PNG oficial de Inkacel.
+ * - EspigaLogo es un placeholder SVG inline (reemplazable por asset oficial).
  */
-export const ClaroLogo = ({ className }: { className?: string }) => (
-  <div
-    className={cn(
-      "inline-flex select-none items-center rounded-md bg-primary px-2.5 py-1 font-extrabold tracking-tight text-primary-foreground shadow-soft",
-      className,
-    )}
-    aria-label="Claro"
-  >
-    <span className="text-[0.95em]">claro</span>
-  </div>
+export const InkacelLogo = ({ className }: { className?: string }) => (
+  <img
+    src={inkacelLogo}
+    alt="Inkacel"
+    className={cn("inline-block h-7 w-auto select-none object-contain", className)}
+  />
 );
 
 export const EspigaLogo = ({ className }: { className?: string }) => (

@@ -31,7 +31,7 @@ export const EspigaProductsIllustration = () => {
       <div className="relative flex h-full w-full items-end justify-center pb-10">
         <svg
           viewBox="0 0 320 320"
-          className="h-[88%] w-[88%] drop-shadow-claro"
+          className="h-[88%] w-[88%] drop-shadow-brand"
           role="img"
           aria-label="Bolsa de panadería La Espiga con pan, baguette y café"
         >
@@ -142,7 +142,7 @@ export const EspigaProductsIllustration = () => {
         +S/30 en La Espiga
       </div>
       <div
-        className="absolute bottom-4 right-2 flex items-center gap-1.5 rounded-full border border-primary/20 bg-primary px-3 py-1.5 text-xs font-semibold text-primary-foreground shadow-claro animate-fade-up"
+        className="absolute bottom-4 right-2 flex items-center gap-1.5 rounded-full border border-primary/20 bg-primary px-3 py-1.5 text-xs font-semibold text-primary-foreground shadow-brand animate-fade-up"
         style={{ animationDelay: "320ms" }}
       >
         <Wifi className="h-3.5 w-3.5" />
