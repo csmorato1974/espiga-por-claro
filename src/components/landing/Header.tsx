@@ -1,5 +1,4 @@
-import { Bot, MessageCircle } from "lucide-react";
-import { Link } from "react-router-dom";
+import { MessageCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { buildWhatsAppLink, trackWhatsAppClick } from "@/lib/whatsapp";
 import { InkacelLogo, EspigaLogo } from "./Logos";
@@ -14,12 +13,6 @@ export const Header = () => {
           <InkacelLogo className="h-6 sm:h-7" />
         </div>
         <div className="flex items-center gap-2">
-          <Button asChild variant="outline" size="sm" className="hidden sm:inline-flex">
-            <Link to="/chatbot">
-              <Bot className="mr-1.5 h-4 w-4" />
-              Probar chatbot
-            </Link>
-          </Button>
           <Button
             asChild
             size="sm"
