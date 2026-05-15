@@ -105,7 +105,10 @@ export function useChatbot() {
       fields: { direccion?: string; dni?: string }
     ) => {
       if (!sessionId) return [];
-      const updates: Record<string, unknown> = { state: newState, ...fields };
+      const updates: { state: ChatState; direccion?: string; dni?: string } = {
+        state: newState,
+        ...fields,
+      };
       const { error: upErr } = await supabase
         .from("chat_sessions")
         .update(updates)
