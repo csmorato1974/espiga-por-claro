@@ -1,7 +1,6 @@
-import { MessageCircle, PhoneCall } from "lucide-react";
+import { MessageCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { buildWhatsAppLink, trackWhatsAppClick } from "@/lib/whatsapp";
-import { trackEvent } from "@/lib/analytics";
 
 export const FinalCTA = () => {
   return (
@@ -16,7 +15,7 @@ export const FinalCTA = () => {
           ¿Listo para tener internet desde S/30?
         </h2>
         <p className="mx-auto mt-4 max-w-xl text-base text-primary-foreground/85 sm:text-lg">
-          Déjanos tus datos o conversa directamente con un asesor por WhatsApp.
+          Conversa directamente con un asesor por WhatsApp.
         </p>
 
         <div className="mx-auto mt-8 flex max-w-md flex-col gap-3 sm:flex-row sm:justify-center">
@@ -33,18 +32,6 @@ export const FinalCTA = () => {
             >
               <MessageCircle className="mr-2 h-5 w-5" />
               Hablar por WhatsApp
-            </a>
-          </Button>
-
-          <Button
-            asChild
-            size="lg"
-            variant="outline"
-            className="h-12 border-primary-foreground/40 bg-transparent text-primary-foreground hover:bg-primary-foreground/10"
-          >
-            <a href="#formulario" onClick={() => trackEvent("cta_click", "final_solicitar_llamada")}>
-              <PhoneCall className="mr-2 h-5 w-5" />
-              Solicitar llamada
             </a>
           </Button>
         </div>

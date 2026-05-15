@@ -4,11 +4,11 @@ import { Hero } from "@/components/landing/Hero";
 import { BenefitCard } from "@/components/landing/BenefitCard";
 import { Plans } from "@/components/landing/Plans";
 import { HowItWorks } from "@/components/landing/HowItWorks";
-import { LeadSection } from "@/components/landing/LeadSection";
+
 import { TrustStrip } from "@/components/landing/TrustStrip";
 import { FinalCTA } from "@/components/landing/FinalCTA";
 import { Footer } from "@/components/landing/Footer";
-import { QRCallout } from "@/components/landing/QRCallout";
+
 import { FloatingChatbotButton } from "@/components/simulator/FloatingChatbotButton";
 import { trackPageView } from "@/lib/analytics";
 
@@ -25,8 +25,6 @@ const Index = () => {
         <BenefitCard />
         <Plans />
         <HowItWorks />
-        <QRCallout />
-        <LeadSection />
         <TrustStrip />
         <FinalCTA />
       </main>
