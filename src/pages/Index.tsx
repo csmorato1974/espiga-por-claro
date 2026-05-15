@@ -7,6 +7,7 @@ import { LeadSection } from "@/components/landing/LeadSection";
 import { TrustStrip } from "@/components/landing/TrustStrip";
 import { FinalCTA } from "@/components/landing/FinalCTA";
 import { Footer } from "@/components/landing/Footer";
+import { FloatingChatbotButton } from "@/components/simulator/FloatingChatbotButton";
 
 const Index = () => {
   return (
@@ -22,6 +23,7 @@ const Index = () => {
         <FinalCTA />
       </main>
       <Footer />
+      <FloatingChatbotButton />
     </div>
   );
 };

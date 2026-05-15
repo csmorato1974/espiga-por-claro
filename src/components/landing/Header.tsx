@@ -1,4 +1,5 @@
-import { MessageCircle } from "lucide-react";
+import { Bot, MessageCircle } from "lucide-react";
+import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { buildWhatsAppLink, trackWhatsAppClick } from "@/lib/whatsapp";
 import { InkacelLogo, EspigaLogo } from "./Logos";
@@ -12,11 +13,18 @@ export const Header = () => {
           <span className="text-sm font-semibold text-muted-foreground sm:text-base">por</span>
           <InkacelLogo className="h-6 sm:h-7" />
         </div>
-        <Button
-          asChild
-          size="sm"
-          className="bg-primary text-primary-foreground hover:bg-primary-dark shadow-soft"
-        >
+        <div className="flex items-center gap-2">
+          <Button asChild variant="outline" size="sm" className="hidden sm:inline-flex">
+            <Link to="/chatbot">
+              <Bot className="mr-1.5 h-4 w-4" />
+              Probar chatbot
+            </Link>
+          </Button>
+          <Button
+            asChild
+            size="sm"
+            className="bg-primary text-primary-foreground hover:bg-primary-dark shadow-soft"
+          >
           <a
             href={buildWhatsAppLink("general")}
             target="_blank"
@@ -27,6 +35,7 @@ export const Header = () => {
             WhatsApp
           </a>
         </Button>
+        </div>
       </div>
     </header>
   );
