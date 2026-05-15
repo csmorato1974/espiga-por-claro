@@ -58,6 +58,8 @@ export default {
           coffee: "hsl(var(--espiga-coffee))",
         },
         wa: {
+          brand: "hsl(var(--wa-brand))",
+          "brand-dark": "hsl(var(--wa-brand-dark))",
           green: "hsl(var(--wa-green))",
           "green-dark": "hsl(var(--wa-green-dark))",
           bg: "hsl(var(--wa-bg))",
