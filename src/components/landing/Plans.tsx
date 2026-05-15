@@ -2,6 +2,7 @@ import { Check, MessageCircle, Star } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { PLANS } from "@/config/campaign";
 import { buildWhatsAppLink, trackWhatsAppClick } from "@/lib/whatsapp";
+import { trackEvent } from "@/lib/analytics";
 import { cn } from "@/lib/utils";
 
 export const Plans = () => {
