@@ -10,13 +10,13 @@ export const Plans = () => {
       <div className="container px-4">
         <div className="mx-auto max-w-2xl text-center">
           <p className="text-xs font-bold uppercase tracking-widest text-primary">Elige tu plan</p>
-          <h2 className="mt-2 text-3xl font-extrabold sm:text-4xl">Tres planes Inkacel pensados para ti</h2>
+          <h2 className="mt-2 text-3xl font-extrabold sm:text-4xl">Cuatro planes Inkacel pensados para ti</h2>
           <p className="mt-3 text-muted-foreground">
-            Precios referenciales. Un asesor confirmará disponibilidad y cobertura por WhatsApp.
+            Precios promocionales por tiempo limitado. Un asesor confirmará cobertura por WhatsApp.
           </p>
         </div>
 
-        <div className="mt-10 grid gap-5 md:grid-cols-3">
+        <div className="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-4">
           {PLANS.map((plan) => (
             <article
               key={plan.id}

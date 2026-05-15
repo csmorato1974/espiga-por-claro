@@ -146,7 +146,7 @@ export const EspigaProductsIllustration = () => {
         style={{ animationDelay: "320ms" }}
       >
         <Wifi className="h-3.5 w-3.5" />
-        Internet desde S/30
+        Internet desde S/39.50
       </div>
     </div>
   );

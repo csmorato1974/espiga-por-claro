@@ -21,7 +21,13 @@ import { CAMPAIGN, PLAN_LABEL } from "@/config/campaign";
 import { buildWhatsAppLink, trackWhatsAppClick } from "@/lib/whatsapp";
 import { readUtm } from "@/lib/utm";
 
-const planValues = ["entrada", "intensivo", "completo", "no_seguro"] as const;
+const planValues = [
+  "plan_200",
+  "plan_400",
+  "plan_2play_200",
+  "plan_2play_400",
+  "no_seguro",
+] as const;
 
 const schema = z.object({
   nombre: z.string().trim().min(2, "Ingresa tu nombre completo").max(100),
@@ -189,9 +195,10 @@ export const LeadForm = () => {
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="entrada">Plan Entrada (desde S/30)</SelectItem>
-              <SelectItem value="intensivo">Plan Intensivo</SelectItem>
-              <SelectItem value="completo">Plan Completo</SelectItem>
+              <SelectItem value="plan_200">1Play 200MB (S/39.50 x 4 meses)</SelectItem>
+              <SelectItem value="plan_400">1Play 400MB + Repetidor (S/55 x 6 meses)</SelectItem>
+              <SelectItem value="plan_2play_200">2Play 200MB + Claro TV+ (S/75 x 4 meses)</SelectItem>
+              <SelectItem value="plan_2play_400">2Play 400MB + Claro TV+ + Repetidor (S/85 x 4 meses)</SelectItem>
               <SelectItem value="no_seguro">No estoy seguro</SelectItem>
             </SelectContent>
           </Select>
