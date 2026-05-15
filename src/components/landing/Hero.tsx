@@ -1,7 +1,7 @@
-import { MessageCircle, ChevronDown, Sparkles } from "lucide-react";
+import { MessageCircle, ChevronDown, Sparkles, Wheat, Wifi } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { buildWhatsAppLink, trackWhatsAppClick } from "@/lib/whatsapp";
-import { EspigaProductsIllustration } from "./EspigaProductsIllustration";
+import espigaPhoto from "@/assets/espiga-empanadas.png";
 
 export const Hero = () => {
   return (
@@ -61,8 +61,34 @@ export const Hero = () => {
           </p>
         </div>
 
-        <div className="relative mx-auto w-full max-w-sm animate-fade-up md:max-w-md" style={{ animationDelay: "120ms" }}>
-          <EspigaProductsIllustration />
+        <div
+          className="relative mx-auto w-full max-w-sm animate-fade-up md:max-w-md"
+          style={{ animationDelay: "120ms" }}
+        >
+          <div className="relative overflow-hidden rounded-3xl border border-primary/15 shadow-brand">
+            <img
+              src={espigaPhoto}
+              alt="Empanadas recién horneadas servidas en La Espiga"
+              loading="eager"
+              className="block h-full w-full object-cover aspect-[4/5]"
+            />
+          </div>
+
+          {/* Floating promo chips */}
+          <div
+            className="absolute -left-2 top-6 flex items-center gap-1.5 rounded-full border border-primary/20 bg-card px-3 py-1.5 text-xs font-semibold text-foreground shadow-soft animate-fade-up"
+            style={{ animationDelay: "260ms" }}
+          >
+            <Wheat className="h-3.5 w-3.5 text-primary" />
+            +S/30 en La Espiga
+          </div>
+          <div
+            className="absolute -right-2 bottom-6 flex items-center gap-1.5 rounded-full border border-primary/20 bg-primary px-3 py-1.5 text-xs font-semibold text-primary-foreground shadow-brand animate-fade-up"
+            style={{ animationDelay: "380ms" }}
+          >
+            <Wifi className="h-3.5 w-3.5" />
+            Internet desde S/39.50
+          </div>
         </div>
       </div>
     </section>
