@@ -55,10 +55,11 @@
     --radius: 1rem;
 
     /* Gradients */
-    --gradient-brand: linear-gradient(135deg, hsl(var(--primary-dark)) 0%, hsl(var(--primary)) 60%, hsl(var(--primary-glow)) 100%);
+    --gradient-brand: linear-gradient(135deg, hsl(var(--primary-dark)) 0%, hsl(var(--primary)) 55%, hsl(var(--primary-glow)) 100%);
     --gradient-warm: linear-gradient(180deg, hsl(var(--espiga-cream)) 0%, hsl(var(--background)) 100%);
     --gradient-hero: radial-gradient(1200px 600px at 80% -10%, hsl(var(--primary) / 0.18), transparent 60%),
-                     radial-gradient(800px 500px at -10% 110%, hsl(var(--espiga-gold) / 0.22), transparent 60%),
+                     radial-gradient(800px 500px at -10% 110%, hsl(var(--espiga-gold) / 0.28), transparent 60%),
+                     radial-gradient(700px 500px at 50% 120%, hsl(var(--espiga-wheat) / 0.18), transparent 60%),
                      linear-gradient(180deg, hsl(var(--background)) 0%, hsl(var(--espiga-cream)) 100%);
 
     /* Shadows */
