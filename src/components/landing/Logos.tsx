@@ -1,5 +1,6 @@
 import { cn } from "@/lib/utils";
 import inkacelLogo from "@/assets/inkacel-logo.png";
+import espigaLogo from "@/assets/espiga-logo.png";
 
 /**
  * Logotipos de marca.
