@@ -1,70 +1,51 @@
-# Plan: Simulador del flujo de conversación
+## Cambios solicitados en el documento
 
-Voy a entregar las tres piezas integradas en una sola página `/simulador`, más un acceso visible desde el landing.
+### 1. Retirar la palabra "Claro" de toda la landing
+- `src/config/campaign.ts`: cambiar `"Claro TV+"` → `"TV+"` en nombres de planes, bullets, mensajes WhatsApp y `PLAN_LABEL`.
+- `src/components/landing/LeadForm.tsx` (líneas 200-201): mismo reemplazo en los `SelectItem`.
+- `src/components/chatbot/WhatsAppHeader.tsx`: cambiar `"Claro Bot"` y avatar `"CB"` → `"Asistente La Espiga"` / `"LE"`.
 
-## 1. Acceso al chatbot existente
+### 2. Colores corporativos La Espiga (ya aplicado)
+La paleta verde/dorada/trigo ya está activa en `src/index.css`. Solo se aplicará un repaso para verificar que el Hero y CTAs respiren la línea gráfica de la espiga (mantener tokens actuales).
 
-- Añadir un botón "Probar chatbot" en `Header.tsx` (junto al de WhatsApp) que enlace a `/chatbot` con `react-router` `<Link>`.
-- Añadir un botón flotante (burbuja verde, esquina inferior derecha) visible en todo el landing que abra `/chatbot` en una nueva pestaña.
-- No tocar los botones existentes de wa.me — siguen abriendo WhatsApp real como ahora.
+### 3. Botones WhatsApp en colores corporativos del WhatsApp
+Cambiar los botones de "WhatsApp / Quiero mi plan por WhatsApp / Quiero este plan" para que usen verde WhatsApp (#25D366 / hover #128C7E) en vez del verde Espiga.
+- Añadir tokens `--wa-brand` y `--wa-brand-dark` en `src/index.css` y mapearlos en `tailwind.config.ts`.
+- Reemplazar `bg-primary text-primary-foreground hover:bg-primary-dark` por `bg-wa-brand text-white hover:bg-wa-brand-dark` en:
+  - `Header.tsx`
+  - `Hero.tsx` (CTA principal)
+  - `Plans.tsx` (CTA de cada plan, manteniendo destaque del plan recomendado)
+  - `FinalCTA.tsx`
+  - `LeadForm.tsx` (botón de envío si aplica)
+- Mantener el ícono `MessageCircle` de Lucide.
 
-## 2. Página `/simulador` con tres zonas
+### 4. Botón flotante del Chat Bot más visible
+`src/components/simulator/FloatingChatbotButton.tsx`: convertirlo en una píldora con ícono de robot (`Bot` de lucide-react) + texto **"Chat Bot"**, fondo verde Espiga con sombra fuerte y animación sutil de pulso. Mantener posición fija inferior derecha.
 
-```text
-┌─────────────────────────────────────────────────────┐
-│  Header: título + selector escenario + controles    │
-├──────────────────────┬──────────────────────────────┤
-│                      │  Panel QA                    │
-│  Chat WhatsApp       │  - Estado actual             │
-│  (mismas burbujas    │  - direccion / dni           │
-│   que /chatbot)      │  - Historial JSON            │
-│                      │  - Botones forzar transición │
-│                      │  - Reiniciar / Exportar      │
-└──────────────────────┴──────────────────────────────┘
-```
+### 5. Sección Call To Action con QR + logo La Espiga
+Crear `src/components/landing/QRCallout.tsx` y montarla en `Index.tsx` (después de `Hero` o antes de `FinalCTA`):
+- Tarjeta destacada con fondo cream/dorado y borde verde.
+- Headline: **"¿Quieres internet por S/. 39.50 al mes y S/. 30 de consumo gratis en La Espiga? Escanea este QR"**.
+- QR generado con la librería `qrcode.react` (apuntando a la URL pública de la landing) acompañado del logo de La Espiga superpuesto al centro o al lado.
+- CTA secundario WhatsApp debajo.
+- Dependencia nueva: `qrcode.react`.
 
-En móvil se apila: chat arriba, panel QA en un acordeón debajo.
+### Detalles técnicos
+- Verde WhatsApp en HSL: `142 70% 49%` (brand) / `142 70% 38%` (dark).
+- Mantener accesibilidad: contraste AA en botones (`text-white` sobre verde WhatsApp ✓).
+- No tocar `client.ts`, `types.ts`, ni configuración Supabase.
+- No se requieren cambios de backend ni migraciones.
 
-### Modo automático (demo paso a paso)
-
-- Selector de escenario con 4 presets:
-  - **Cobertura completa**: usuario elige opción 1 → escribe dirección válida → vuelve al menú.
-  - **Cobertura con error**: usuario elige opción 1 → escribe "abc" (corta) → reintenta con dirección válida.
-  - **Planes con DNI**: opción 2 → DNI inválido → DNI válido de 8 dígitos.
-  - **Escala a supervisor**: opción 3 directa, y otro escenario que escribe "supervisor" en medio del flujo.
-- Controles: **Play / Pause / Paso siguiente / Reiniciar / Velocidad (1x, 2x, 4x)**.
-- El simulador llama directamente a `handleQuickReply` y `handleUserText` de `src/lib/chatbot/flow.ts` con un delay configurable entre pasos. Muestra un indicador "escribiendo…" antes de cada mensaje del bot.
-- **No persiste en Supabase** — corre 100% en memoria para que se pueda repetir sin ensuciar la base de datos. Esto lo diferencia del chatbot real de `/chatbot`.
-
-### Panel QA (lateral derecho)
-
-- **Estado actual** (badge): `menu` / `await_direccion` / `await_dni` / `requiere_supervisor`.
-- **Campos guardados**: `direccion`, `dni` (en vivo).
-- **Historial JSON**: array de `{role, content, kind, ts}` con scroll, monospace.
-- **Forzar transición**: 4 botones que setean el estado manualmente sin pasar por el flujo (útil para QA de mensajes específicos).
-- **Inyectar texto libre**: input que dispara `handleUserText` con el estado actual — para probar entradas raras (vacío, solo espacios, palabras clave, etc.).
-- **Exportar transcript**: botón que descarga el historial como `.json`.
-- **Reiniciar**: limpia estado y mensajes.
-
-## 3. Detalles técnicos
-
-**Archivos nuevos:**
-- `src/pages/Simulador.tsx` — página principal con layout 2 columnas.
-- `src/components/simulator/ScenarioRunner.tsx` — motor de auto-play con `setTimeout`/refs.
-- `src/components/simulator/QAPanel.tsx` — panel lateral.
-- `src/components/simulator/scenarios.ts` — definición de los 4 presets como secuencias `[{type:'quick', id:'cobertura'}, {type:'text', value:'Av. Arequipa 123'}, ...]`.
-- `src/components/landing/FloatingChatbotButton.tsx` — burbuja flotante.
-
-**Archivos editados:**
-- `src/App.tsx` — registrar ruta `/simulador`.
-- `src/components/landing/Header.tsx` — añadir link "Probar chatbot".
-- `src/pages/Index.tsx` — montar el botón flotante.
-
-**Reutilización:**
-- Las burbujas, quick replies y header de WhatsApp se reusan tal cual desde `src/components/chatbot/`.
-- La lógica de `flow.ts` se usa sin modificar — confirma que es portable a un edge function/webhook.
-
-**Sin cambios en:**
-- Base de datos (no se necesitan migraciones).
-- `useChatbot.ts` (sigue siendo el hook del chatbot real persistido).
-- Botones existentes de wa.me en el landing.
+### Archivos a modificar
+- `src/config/campaign.ts`
+- `src/components/landing/LeadForm.tsx`
+- `src/components/chatbot/WhatsAppHeader.tsx`
+- `src/index.css`
+- `tailwind.config.ts`
+- `src/components/landing/Header.tsx`
+- `src/components/landing/Hero.tsx`
+- `src/components/landing/Plans.tsx`
+- `src/components/landing/FinalCTA.tsx`
+- `src/components/simulator/FloatingChatbotButton.tsx`
+- `src/components/landing/QRCallout.tsx` (nuevo)
+- `src/pages/Index.tsx`
