@@ -1,11 +1,13 @@
 import { Bot } from "lucide-react";
 import { Link } from "react-router-dom";
+import { trackEvent } from "@/lib/analytics";
 
 export function FloatingChatbotButton() {
   return (
     <Link
       to="/chatbot"
       aria-label="Abrir Chat Bot"
+      onClick={() => trackEvent("chatbot_open", "floating_button")}
       className="group fixed bottom-5 right-5 z-50 flex items-center gap-2 rounded-full bg-primary px-4 py-3 text-primary-foreground shadow-brand ring-2 ring-primary/30 transition hover:scale-105 hover:bg-primary-dark active:scale-95"
     >
       <span className="relative flex h-9 w-9 items-center justify-center rounded-full bg-white/15">

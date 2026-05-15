@@ -14,6 +14,54 @@ export type Database = {
   }
   public: {
     Tables: {
+      analytics_events: {
+        Row: {
+          created_at: string
+          event_name: string
+          id: string
+          local: string | null
+          metadata: Json
+          path: string | null
+          referrer: string | null
+          session_id: string | null
+          source: string | null
+          user_agent: string | null
+          utm_campaign: string | null
+          utm_medium: string | null
+          utm_source: string | null
+        }
+        Insert: {
+          created_at?: string
+          event_name: string
+          id?: string
+          local?: string | null
+          metadata?: Json
+          path?: string | null
+          referrer?: string | null
+          session_id?: string | null
+          source?: string | null
+          user_agent?: string | null
+          utm_campaign?: string | null
+          utm_medium?: string | null
+          utm_source?: string | null
+        }
+        Update: {
+          created_at?: string
+          event_name?: string
+          id?: string
+          local?: string | null
+          metadata?: Json
+          path?: string | null
+          referrer?: string | null
+          session_id?: string | null
+          source?: string | null
+          user_agent?: string | null
+          utm_campaign?: string | null
+          utm_medium?: string | null
+          utm_source?: string | null
+        }
+        Relationships: []
+      }
       chat_messages: {
         Row: {
           content: string
@@ -129,7 +177,16 @@ export type Database = {
       }
     }
     Views: {
-      [_ in never]: never
+      analytics_conversion_summary: {
+        Row: {
+          day: string | null
+          event_name: string | null
+          source: string | null
+          total_events: number | null
+          unique_sessions: number | null
+        }
+        Relationships: []
+      }
     }
     Functions: {
       [_ in never]: never

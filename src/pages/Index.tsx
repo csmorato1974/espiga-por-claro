@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { Header } from "@/components/landing/Header";
 import { Hero } from "@/components/landing/Hero";
 import { BenefitCard } from "@/components/landing/BenefitCard";
@@ -9,8 +10,13 @@ import { FinalCTA } from "@/components/landing/FinalCTA";
 import { Footer } from "@/components/landing/Footer";
 import { QRCallout } from "@/components/landing/QRCallout";
 import { FloatingChatbotButton } from "@/components/simulator/FloatingChatbotButton";
+import { trackPageView } from "@/lib/analytics";
 
 const Index = () => {
+  useEffect(() => {
+    trackPageView("/");
+  }, []);
+
   return (
     <div className="min-h-screen bg-background font-sans">
       <Header />

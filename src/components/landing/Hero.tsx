@@ -1,6 +1,7 @@
 import { MessageCircle, ChevronDown, Sparkles, Wheat, Wifi } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { buildWhatsAppLink, trackWhatsAppClick } from "@/lib/whatsapp";
+import { trackEvent } from "@/lib/analytics";
 import espigaPhoto from "@/assets/espiga-empanadas.png";
 
 export const Hero = () => {
@@ -49,7 +50,7 @@ export const Hero = () => {
               variant="outline"
               className="h-12 border-foreground/20 bg-card hover:bg-secondary"
             >
-              <a href="#planes">
+              <a href="#planes" onClick={() => trackEvent("cta_click", "hero_ver_planes")}>
                 Ver planes disponibles
                 <ChevronDown className="ml-1.5 h-4 w-4" />
               </a>
