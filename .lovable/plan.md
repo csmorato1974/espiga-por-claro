@@ -1,23 +1,81 @@
-## Reemplazar ilustración del hero por foto real de La Espiga
+# Plan: Chatbot tipo WhatsApp con flujo guiado
 
-### 1. Asset
-- Copiar `user-uploads://Captura_de_pantalla_2026-05-15_113450.png` → `src/assets/espiga-empanadas.jpg` (renombrar a algo descriptivo y `.jpg` para mejor compresión, aunque conservaré PNG si el usuario lo prefiere — uso `.png` por simplicidad y respeto al original).
+## Alcance
+Nueva ruta `/chatbot` (enlazable desde el landing si se desea más adelante). Una sola conversación por navegador, persistida en Lovable Cloud. UI fiel al estilo WhatsApp (header verde, fondo con patrón, burbujas, hora, doble check, botones rápidos tipo "Quick Reply").
 
-### 2. Hero (`src/components/landing/Hero.tsx`)
-- Eliminar import y uso de `EspigaProductsIllustration`.
-- Importar la nueva imagen como módulo ES6 (`import espigaPhoto from "@/assets/espiga-empanadas.png"`).
-- Reemplazar el bloque visual derecho por:
-  - `<img>` con `loading="eager"`, `alt="Productos de La Espiga"`, esquinas redondeadas (`rounded-3xl`), sombra (`shadow-brand`), `object-cover` en aspect-square o aspect-[4/5].
-  - Mantener los **chips flotantes** actuales ("+S/30 en La Espiga" y "Internet desde S/39.50") superpuestos como `absolute` sobre la foto, para no perder los mensajes promocionales clave.
-  - Conservar la animación `animate-fade-up` y el contenedor `relative mx-auto w-full max-w-sm md:max-w-md`.
+## Backend (Lovable Cloud)
 
-### 3. Limpieza
-- Borrar `src/components/landing/EspigaProductsIllustration.tsx` (queda sin usos).
+Migración con dos tablas:
 
-### 4. Verificación
-- Build limpio.
-- Preview: foto visible en hero a la derecha en desktop y debajo del copy en mobile, con los dos chips de promoción aún visibles encima.
+- `chat_sessions`
+  - `client_id` (text, único) — UUID generado en el navegador y guardado en `localStorage` para identificar la sesión sin login
+  - `state` (text) — `menu` | `await_direccion` | `await_dni` | `requiere_supervisor` | `finalizado`
+  - `direccion` (text, nullable)
+  - `dni` (text, nullable)
 
-### Notas
-- No se toca paleta, planes ni copy del hero.
-- Si el usuario luego prefiere recortar la foto o usar un fondo distinto, se puede iterar sobre el mismo asset.
+- `chat_messages`
+  - `session_id` (uuid → chat_sessions)
+  - `role` (text) — `bot` | `user`
+  - `content` (text)
+  - `kind` (text) — `text` | `menu` | `confirmation` | `error`
+
+RLS: acceso público anónimo restringido por `client_id` (se filtra en cliente; insert/select abiertos a `anon` con `client_id` enviado en el payload). Sin auth — coherente con el patrón actual de `leads`.
+
+## Frontend
+
+### Archivos nuevos
+- `src/pages/Chatbot.tsx` — página standalone con la UI del chat
+- `src/components/chatbot/WhatsAppHeader.tsx` — header verde, avatar "Claro Bot", estado "en línea"
+- `src/components/chatbot/MessageBubble.tsx` — burbuja con cola, hora, doble check
+- `src/components/chatbot/QuickReplyButtons.tsx` — botones rápidos bajo el último mensaje del bot
+- `src/components/chatbot/ChatInput.tsx` — input inferior estilo WhatsApp (deshabilitado cuando solo hay botones)
+- `src/lib/chatbot/flow.ts` — máquina de estados pura (sin React) con la lógica de transiciones, validaciones y mensajes
+- `src/lib/chatbot/config.ts` — constantes: longitud DNI (default 8), copys, opciones del menú
+- `src/hooks/useChatbot.ts` — orquesta sesión, carga histórica, envío y persistencia
+
+### Diseño
+- Tokens nuevos en `index.css` y `tailwind.config.ts`: `--whatsapp-green`, `--whatsapp-green-dark`, `--whatsapp-bg`, `--whatsapp-bubble-out`, `--whatsapp-bubble-in`, `--whatsapp-tick`. HSL.
+- Fondo con patrón tenue (SVG inline doodle WhatsApp-like)
+- Responsive: en móvil ocupa toda la pantalla; en desktop, marco centrado tipo "teléfono" max-w-md con sombra
+
+## Lógica del flujo (`flow.ts`)
+
+Estado inicial → bot envía saludo + menú con 3 botones:
+1. Validar cobertura y ofertas
+2. Consultar planes con DNI
+3. Hablar con un supervisor
+
+Manejo:
+- Botón 1 → estado `await_direccion`, mensaje pidiendo dirección + botón "Volver al menú"
+  - Validar `trim().length > 0` (mín 5 chars). Error: "La dirección no puede estar vacía. Inténtalo de nuevo."
+  - OK → guardar `direccion`, confirmar: "Recibimos tu dirección: *<dir>*. Un asesor revisará la cobertura disponible y se comunicará contigo." → reenvía menú
+- Botón 2 → `await_dni`, pide DNI + botón "Volver al menú"
+  - Validar `/^\d{8}$/` (longitud configurable en `config.ts`). Error: "El DNI debe tener 8 dígitos numéricos."
+  - OK → guardar `dni`, confirmar: "Gracias. Validaremos los planes disponibles para el DNI *<dni>*." → reenvía menú
+- Botón 3 → estado `requiere_supervisor`, mensaje de derivación, deshabilita input. Botón "Volver al menú" disponible.
+
+Reglas globales:
+- Texto libre fuera de un estado de captura → "No entendí tu mensaje. Te muestro el menú principal." + menú
+- Palabras clave `supervisor`, `asesor`, `humano` en cualquier momento → escala a flujo 3
+- Botón "Volver al menú" siempre visible en estados de captura
+
+## Persistencia
+
+`useChatbot`:
+1. Al montar: lee `client_id` de localStorage (genera uno si no existe), busca/crea `chat_sessions`, carga `chat_messages` ordenados
+2. Cada mensaje (user o bot) → insert en `chat_messages`
+3. Cada cambio de estado → update `chat_sessions`
+4. Si la sesión ya estaba en `requiere_supervisor`, mantiene UI escalada al recargar
+
+## Preparado para webhook futuro
+- `flow.ts` exporta función pura `nextStep(state, input) → { newState, messages, persistFields }`. Cualquier integración futura (edge function que llame a CRM/WhatsApp Business API) reusará esta función.
+- Estructura de `chat_messages` ya compatible con formato típico de WhatsApp (role, content, timestamp).
+
+## Verificación
+- Build limpio
+- Probar los 3 flujos, validaciones (dirección vacía, DNI no numérico/longitud incorrecta), recarga preserva estado, palabra clave "supervisor" escala, botón "Volver al menú" funciona, responsive en móvil
+
+## Lo que NO se hace
+- No se conecta aún a WhatsApp Business API real (se deja la arquitectura lista)
+- No se modifica el landing actual ni `leads`
+- No se agregan auth ni roles
