@@ -64,7 +64,10 @@ export const Plans = () => {
                   href={buildWhatsAppLink(plan.whatsappKey)}
                   target="_blank"
                   rel="noopener noreferrer"
-                  onClick={() => trackWhatsAppClick(`plan_${plan.id}`)}
+                  onClick={() => {
+                    trackEvent("cta_click", `plan_card_${plan.id}`, { plan: plan.id, price: plan.price });
+                    trackWhatsAppClick(`plan_${plan.id}`, { plan: plan.id });
+                  }}
                 >
                   <MessageCircle className="mr-1.5 h-4 w-4" />
                   {plan.ctaLabel}

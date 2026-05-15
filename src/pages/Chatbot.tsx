@@ -4,6 +4,7 @@ import { MessageBubble } from "@/components/chatbot/MessageBubble";
 import { QuickReplyButtons } from "@/components/chatbot/QuickReplyButtons";
 import { WhatsAppHeader } from "@/components/chatbot/WhatsAppHeader";
 import { useChatbot } from "@/hooks/useChatbot";
+import { trackPageView } from "@/lib/analytics";
 
 function formatTime(iso: string) {
   const d = new Date(iso);
@@ -13,6 +14,10 @@ function formatTime(iso: string) {
 const Chatbot = () => {
   const { loading, sending, messages, quickReplies, sendQuickReply, sendText, state } = useChatbot();
   const scrollRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    trackPageView("/chatbot");
+  }, []);
 
   useEffect(() => {
     scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight, behavior: "smooth" });

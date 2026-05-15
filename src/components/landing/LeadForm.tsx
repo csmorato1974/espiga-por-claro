@@ -19,6 +19,7 @@ import {
 import { supabase } from "@/integrations/supabase/client";
 import { CAMPAIGN, PLAN_LABEL } from "@/config/campaign";
 import { buildWhatsAppLink, trackWhatsAppClick } from "@/lib/whatsapp";
+import { trackEvent } from "@/lib/analytics";
 import { readUtm } from "@/lib/utm";
 
 const planValues = [
@@ -80,12 +81,14 @@ export const LeadForm = () => {
       return;
     }
 
-    // TODO conectar tracking del lead:
-    // window.gtag?.("event", "generate_lead", { plan: values.plan_interes });
-    // window.fbq?.("track", "Lead", { value: 30, currency: "PEN" });
-    // fetch("<APPS_SCRIPT_URL_GOOGLE_SHEETS>", { method: "POST", body: JSON.stringify(payload) });
-    // fetch("<AIRTABLE_WEBHOOK_URL>", { method: "POST", body: JSON.stringify(payload) });
-    // fetch("<CRM_WEBHOOK_URL>", { method: "POST", body: JSON.stringify(payload) });
+    trackEvent("lead_submit", "lead_form", {
+      plan: values.plan_interes,
+      distrito: values.distrito,
+      utm_source: utm.utm_source,
+      utm_medium: utm.utm_medium,
+      utm_campaign: utm.utm_campaign,
+      local: utm.local,
+    });
 
     toast.success("¡Listo! Un asesor te contactará por WhatsApp.");
     setSubmitted(values);
