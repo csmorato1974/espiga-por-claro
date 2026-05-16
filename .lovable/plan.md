@@ -1,17 +1,14 @@
-## Eliminar secciones QR y Formulario de contacto
+## Reemplazar logos de Inkacel y La Espiga
 
-### Cambios en `src/pages/Index.tsx`
-- Quitar import de `QRCallout` y `LeadSection`.
-- Quitar `<QRCallout />` y `<LeadSection />` del `<main>`.
+Reemplazar los dos archivos de logo usados en `src/components/landing/Logos.tsx` por las imágenes subidas, conservando las proporciones (los componentes ya usan `object-contain` y altura fija, así que el ancho se ajusta automáticamente).
 
-### Archivos a eliminar
-- `src/components/landing/QRCallout.tsx`
-- `src/components/landing/LeadSection.tsx`
-- `src/components/landing/LeadForm.tsx` (sólo usado por LeadSection)
+### Pasos
 
-### Limpieza de referencias
-- Revisar `Header.tsx`, `Hero.tsx`, `FinalCTA.tsx` y cualquier enlace `#formulario` o `#qr`. Si existen, redirigir a `#planes` (o WhatsApp) o eliminar el botón según el caso.
-- Dependencia `qrcode.react` queda sin uso; se puede dejar en `package.json` (no afecta runtime) o removerla.
+1. Copiar `user-uploads://ChatGPT_Image_15_may_2026_11_27_49-2.png` a `src/assets/inkacel-logo.png` (sobrescribir).
+2. Copiar `user-uploads://ChatGPT_Image_15_may_2026_13_07_20-2.png` a `src/assets/espiga-logo.png` (sobrescribir).
 
-### Lo que NO cambia
-- Tracking, planes, hero, beneficios, how it works, trust strip, footer, chatbot flotante.
+### Notas técnicas
+
+- No se modifica `Logos.tsx`, `Header.tsx` ni `Footer.tsx`: siguen importando desde `@/assets/inkacel-logo.png` y `@/assets/espiga-logo.png`.
+- `object-contain` + altura fija preserva proporciones del nuevo logo automáticamente.
+- No se tocan otros archivos.
