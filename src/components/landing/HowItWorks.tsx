@@ -3,7 +3,7 @@ import { QrCode, Layers, ClipboardList, MessageCircle } from "lucide-react";
 const STEPS = [
   { icon: QrCode, title: "Escanea el QR", desc: "El sistema registra tu perfil para atención personalizada." },
   { icon: Layers, title: "​Escoge tu plan", desc: "Revisa la oferta Inkacel y selecciona el paquete de interés." },
-  { icon: ClipboardList, title: "Deja sus datos", desc: "El sistema registra el lead para seguimiento comercial." },
+  { icon: ClipboardList, title: "Deja tus datos", desc: "Un asesor confirma la cobertura, resuelve tus dudas y gestiona la instalación." },
   { icon: MessageCircle, title: "Atención por WhatsApp", desc: "Un asesor confirma cobertura, resuelve dudas y gestiona la instalación." },
 ];
 
