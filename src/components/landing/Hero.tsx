@@ -17,7 +17,7 @@ export const Hero = () => {
 
           <h1 className="mt-4 text-4xl font-extrabold leading-[1.05] text-foreground sm:text-5xl md:text-6xl">
             Internet desde{" "}
-            <span className="bg-gradient-brand bg-clip-text text-transparent">S/39.50</span>{" "}
+            <span className="bg-gradient-brand bg-clip-text text-transparent">S/42</span>{" "}
             para clientes de La Espiga
           </h1>
 
@@ -88,7 +88,7 @@ export const Hero = () => {
             style={{ animationDelay: "380ms" }}
           >
             <Wifi className="h-3.5 w-3.5" />
-            Internet desde S/39.50
+            Internet desde S/42
           </div>
         </div>
       </div>
