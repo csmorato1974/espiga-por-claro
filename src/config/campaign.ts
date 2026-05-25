@@ -19,9 +19,9 @@ export const CAMPAIGN = {
   // Mensajes pre-rellenados de WhatsApp por contexto
   messages: {
     general:
-      "Hola, vengo desde el QR de La Espiga y quiero información sobre el 2Play 300Mbps con promo de 600Mbps por 6 meses a S/42.",
+      "Hola, vengo desde el QR de La Espiga y quiero información sobre el 2Play 300Mbps con promo de 600Mbps por 3 meses a S/42.",
     plan_2play_300:
-      "Hola, vengo del QR de La Espiga. Me interesa el plan 2Play 300Mbps (promo 600Mbps por 6 meses) a S/42.",
+      "Hola, vengo del QR de La Espiga. Me interesa el plan 2Play 300Mbps (promo 600Mbps por 3 meses) a S/42.",
     plan_400:
       "Hola, vengo del QR de La Espiga. Me interesa el plan 1Play 400Mbps + Repetidor a S/55 promocional.",
     plan_2play_200:
@@ -58,10 +58,10 @@ export const PLANS: PlanCard[] = [
     id: "plan_2play_300",
     name: "2Play 300Mbps",
     price: "S/42",
-    priceNote: "x 6 meses promo",
-    tagline: "Promo 600Mbps por 6 meses",
+    priceNote: "x 3 meses promo",
+    tagline: "Promo 600Mbps por 3 meses",
     bullets: [
-      "300Mbps FTTH (600Mbps por 6 meses promo)",
+      "300Mbps FTTH (600Mbps por 3 meses promo)",
       "Incluye TV+",
       "Instalación incluida",
     ],
@@ -115,7 +115,7 @@ export const PLANS: PlanCard[] = [
 ];
 
 export const PLAN_LABEL: Record<string, string> = {
-  plan_2play_300: "2Play 300Mbps (promo 600Mbps x 6 meses)",
+  plan_2play_300: "2Play 300Mbps (promo 600Mbps x 3 meses)",
   plan_400: "1Play 400Mbps + Repetidor",
   plan_2play_200: "2Play 200Mbps + TV+",
   plan_2play_400: "2Play 400Mbps + TV+ + Repetidor",
