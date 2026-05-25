@@ -62,8 +62,8 @@ export const PLANS: PlanCard[] = [
     tagline: "Promo 600Mbps por 3 meses",
     bullets: [
       "300Mbps FTTH (600Mbps por 3 meses promo)",
-      "Incluye TV+",
-      "Instalación incluida",
+      "Incluye Claro Video y Universal",
+      "Instalación GRATIS",
     ],
     highlighted: true,
     ctaLabel: "Quiero este plan",
