@@ -27,7 +27,7 @@ export const CAMPAIGN = {
     plan_2play_200:
       "Hola, vengo del QR de La Espiga. Me interesa el plan 2Play 200Mbps + TV+ a S/75 promocional.",
     plan_2play_400:
-      "Hola, vengo del QR de La Espiga. Me interesa el plan 2Play 400Mbps + TV+ + Repetidor a S/85 promocional.",
+      "Hola, vengo del QR de La Espiga. Me interesa el plan 2Play 400Mbps + TV + Repetidor a S/85 promocional.",
     callback:
       "Hola, vengo desde la landing La Espiga por Inkacel. Quisiera que un asesor me llame.",
     afterLead: (nombre: string, plan: string) =>
@@ -99,7 +99,7 @@ export const PLANS: PlanCard[] = [
   },
   {
     id: "plan_2play_400",
-    name: "2Play 400Mbps + TV+ + Repetidor",
+    name: "2Play 400Mbps + TV + Repetidor",
     price: "S/85",
     priceNote: "x 4 meses · luego S/170",
     tagline: "El combo completo para alto consumo",
@@ -118,6 +118,6 @@ export const PLAN_LABEL: Record<string, string> = {
   plan_2play_300: "2Play 300Mbps (promo 600Mbps x 3 meses)",
   plan_400: "1Play 400Mbps + Repetidor",
   plan_2play_200: "2Play 200Mbps + TV+",
-  plan_2play_400: "2Play 400Mbps + TV+ + Repetidor",
+  plan_2play_400: "2Play 400Mbps + TV + Repetidor",
   no_seguro: "el plan que mejor me convenga",
 };
