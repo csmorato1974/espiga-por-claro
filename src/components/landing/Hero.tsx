@@ -24,7 +24,7 @@ export const Hero = () => {
           <p className="mt-4 max-w-xl text-base leading-relaxed text-muted-foreground sm:text-lg">
             Escanea, elige tu plan y recibe atención inmediata por WhatsApp.{" "}
             <span className="font-semibold text-foreground">
-              Además, al contratar tu paquete de Internet recibes S/30 de consumo gratis en La Espiga.
+              Por la instalación de tu servicio, obtén un vale de consumo de S/ 30 en La Espiga.
             </span>
           </p>
 
@@ -81,7 +81,7 @@ export const Hero = () => {
             style={{ animationDelay: "260ms" }}
           >
             <Wheat className="h-3.5 w-3.5 text-primary" />
-            +S/30 en La Espiga
+            Vale de S/ 30 en La Espiga
           </div>
           <div
             className="absolute -right-2 bottom-6 flex items-center gap-1.5 rounded-full border border-primary/20 bg-primary px-3 py-1.5 text-xs font-semibold text-primary-foreground shadow-brand animate-fade-up"

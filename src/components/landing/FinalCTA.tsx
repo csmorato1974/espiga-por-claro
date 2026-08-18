@@ -12,7 +12,7 @@ export const FinalCTA = () => {
 
       <div className="container relative px-4 text-center">
         <h2 className="mx-auto max-w-3xl text-4xl font-extrabold leading-tight sm:text-5xl">
-          ¿Listo para tener internet desde S/30?
+          ¿Listo para tener internet desde S/42?
         </h2>
         <p className="mx-auto mt-4 max-w-xl text-base text-primary-foreground/85 sm:text-lg">
           Conversa directamente con un asesor por WhatsApp.

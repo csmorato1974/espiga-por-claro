@@ -17,8 +17,8 @@ export const BenefitCard = () => {
               Beneficio exclusivo
             </span>
             <h2 className="mt-2 text-2xl font-extrabold leading-tight text-foreground sm:text-3xl">
-              Contrata tu paquete de Internet y recibe{" "}
-              <span className="text-primary">S/30 de consumo gratis</span> en La Espiga.
+              Por la instalación de tu servicio, obtén un{" "}
+              <span className="text-primary">vale de consumo de S/ 30</span> en La Espiga.
             </h2>
             <p className="mt-2 text-sm text-muted-foreground">
               Promoción válida para clientes que lleguen desde el QR de campaña. Sujeto a validación comercial.
