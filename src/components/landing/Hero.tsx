@@ -24,7 +24,7 @@ export const Hero = () => {
           <p className="mt-4 max-w-xl text-base leading-relaxed text-muted-foreground sm:text-lg">
             Escanea, elige tu plan y recibe atención inmediata por WhatsApp.{" "}
             <span className="font-semibold text-foreground">
-              Además, al contratar tu paquete de Internet recibes S/30 de consumo gratis en La Espiga.
+              Por la instalación de tu servicio, obtén un vale de consumo de S/ 30 en La Espiga.
             </span>
           </p>
 
