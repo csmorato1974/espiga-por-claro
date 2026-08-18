@@ -81,7 +81,7 @@ export const Hero = () => {
             style={{ animationDelay: "260ms" }}
           >
             <Wheat className="h-3.5 w-3.5 text-primary" />
-            +S/30 en La Espiga
+            Vale de S/ 30 en La Espiga
           </div>
           <div
             className="absolute -right-2 bottom-6 flex items-center gap-1.5 rounded-full border border-primary/20 bg-primary px-3 py-1.5 text-xs font-semibold text-primary-foreground shadow-brand animate-fade-up"
