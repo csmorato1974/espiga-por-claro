@@ -189,7 +189,86 @@ export type Database = {
       }
     }
     Functions: {
-      [_ in never]: never
+      chat_add_message: {
+        Args: {
+          p_client_id: string
+          p_content: string
+          p_kind?: string
+          p_role: string
+        }
+        Returns: {
+          content: string
+          created_at: string
+          id: string
+          kind: string
+          role: string
+          session_id: string
+        }
+        SetofOptions: {
+          from: "*"
+          to: "chat_messages"
+          isOneToOne: true
+          isSetofReturn: false
+        }
+      }
+      chat_get_messages: {
+        Args: { p_client_id: string }
+        Returns: {
+          content: string
+          created_at: string
+          id: string
+          kind: string
+          role: string
+          session_id: string
+        }[]
+        SetofOptions: {
+          from: "*"
+          to: "chat_messages"
+          isOneToOne: false
+          isSetofReturn: true
+        }
+      }
+      chat_get_or_create_session: {
+        Args: { p_client_id: string }
+        Returns: {
+          client_id: string
+          created_at: string
+          direccion: string | null
+          dni: string | null
+          id: string
+          state: string
+          updated_at: string
+        }
+        SetofOptions: {
+          from: "*"
+          to: "chat_sessions"
+          isOneToOne: true
+          isSetofReturn: false
+        }
+      }
+      chat_update_session: {
+        Args: {
+          p_client_id: string
+          p_direccion?: string
+          p_dni?: string
+          p_state: string
+        }
+        Returns: {
+          client_id: string
+          created_at: string
+          direccion: string | null
+          dni: string | null
+          id: string
+          state: string
+          updated_at: string
+        }
+        SetofOptions: {
+          from: "*"
+          to: "chat_sessions"
+          isOneToOne: true
+          isSetofReturn: false
+        }
+      }
     }
     Enums: {
       plan_interes:

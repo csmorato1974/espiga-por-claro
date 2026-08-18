@@ -16,8 +16,18 @@ export type UIMessage = {
   created_at: string;
 };
 
+type SessionRow = {
+  id: string;
+  client_id: string;
+  state: string;
+  direccion: string | null;
+  dni: string | null;
+};
+
 const CLIENT_ID_KEY = "chatbot_client_id";
 
+// The client_id is a private capability token: it is the only thing that lets
+// the secured database functions return this browser's conversation.
 function getOrCreateClientId(): string {
   if (typeof window === "undefined") return "";
   let id = localStorage.getItem(CLIENT_ID_KEY);
@@ -28,8 +38,14 @@ function getOrCreateClientId(): string {
   return id;
 }
 
+// Typed thin wrappers around the security-definer RPCs.
+const rpc = supabase.rpc.bind(supabase) as unknown as (
+  fn: string,
+  args: Record<string, unknown>
+) => Promise<{ data: unknown; error: { message: string } | null }>;
+
 export function useChatbot() {
-  const [sessionId, setSessionId] = useState<string | null>(null);
+  const [clientId, setClientId] = useState<string | null>(null);
   const [state, setState] = useState<ChatState>("menu");
   const [messages, setMessages] = useState<UIMessage[]>([]);
   const [loading, setLoading] = useState(true);
@@ -41,58 +57,39 @@ export function useChatbot() {
     if (initRef.current) return;
     initRef.current = true;
     (async () => {
-      const clientId = getOrCreateClientId();
-      // Try fetch existing
-      const { data: existing } = await supabase
-        .from("chat_sessions")
-        .select("*")
-        .eq("client_id", clientId)
-        .maybeSingle();
+      const id = getOrCreateClientId();
 
-      let session = existing;
-      if (!session) {
-        const { data: created, error } = await supabase
-          .from("chat_sessions")
-          .insert({ client_id: clientId, state: "menu" })
-          .select()
-          .single();
-        if (error) {
-          console.error("create session error", error);
-          setLoading(false);
-          return;
-        }
-        session = created;
+      const { data: sessionData, error: sessionErr } = await rpc(
+        "chat_get_or_create_session",
+        { p_client_id: id }
+      );
+      if (sessionErr || !sessionData) {
+        console.error("No se pudo iniciar la conversación");
+        setLoading(false);
+        return;
       }
-
-      setSessionId(session.id);
+      const session = sessionData as SessionRow;
+      setClientId(id);
       setState(session.state as ChatState);
 
-      const { data: msgs } = await supabase
-        .from("chat_messages")
-        .select("*")
-        .eq("session_id", session.id)
-        .order("created_at", { ascending: true });
+      const { data: msgData } = await rpc("chat_get_messages", { p_client_id: id });
+      const msgs = (msgData ?? []) as UIMessage[];
 
-      if (!msgs || msgs.length === 0) {
-        // Seed with greeting
-        const seed = initialBotMessages();
-        const inserted = await Promise.all(
-          seed.map((m) =>
-            supabase
-              .from("chat_messages")
-              .insert({ session_id: session!.id, role: m.role, content: m.content, kind: m.kind })
-              .select()
-              .single()
-          )
-        );
-        setMessages(
-          inserted
-            .map((r) => r.data)
-            .filter(Boolean)
-            .map((d: any) => d as UIMessage)
-        );
+      if (msgs.length === 0) {
+        const seeded: UIMessage[] = [];
+        for (const m of initialBotMessages()) {
+          const { data, error } = await rpc("chat_add_message", {
+            p_client_id: id,
+            p_role: m.role,
+            p_content: m.content,
+            p_kind: m.kind,
+          });
+          if (error || !data) continue;
+          seeded.push(data as UIMessage);
+        }
+        setMessages(seeded);
       } else {
-        setMessages(msgs as UIMessage[]);
+        setMessages(msgs);
       }
       setLoading(false);
     })();
@@ -104,38 +101,38 @@ export function useChatbot() {
       botMsgs: { role: "bot" | "user"; content: string; kind: string }[],
       fields: { direccion?: string; dni?: string }
     ) => {
-      if (!sessionId) return [];
-      const updates: { state: ChatState; direccion?: string; dni?: string } = {
-        state: newState,
-        ...fields,
-      };
-      const { error: upErr } = await supabase
-        .from("chat_sessions")
-        .update(updates)
-        .eq("id", sessionId);
-      if (upErr) console.error("update session", upErr);
+      if (!clientId) return [];
+
+      const { error: upErr } = await rpc("chat_update_session", {
+        p_client_id: clientId,
+        p_state: newState,
+        p_direccion: fields.direccion ?? null,
+        p_dni: fields.dni ?? null,
+      });
+      if (upErr) console.error("No se pudo actualizar la conversación");
 
       const inserted: UIMessage[] = [];
       for (const m of botMsgs) {
-        const { data, error } = await supabase
-          .from("chat_messages")
-          .insert({ session_id: sessionId, role: m.role, content: m.content, kind: m.kind })
-          .select()
-          .single();
-        if (error) {
-          console.error("insert message", error);
+        const { data, error } = await rpc("chat_add_message", {
+          p_client_id: clientId,
+          p_role: m.role,
+          p_content: m.content,
+          p_kind: m.kind,
+        });
+        if (error || !data) {
+          console.error("No se pudo guardar el mensaje");
           continue;
         }
         inserted.push(data as UIMessage);
       }
       return inserted;
     },
-    [sessionId]
+    [clientId]
   );
 
   const sendQuickReply = useCallback(
     async (id: string, label: string) => {
-      if (!sessionId || sending) return;
+      if (!clientId || sending) return;
       setSending(true);
       const result = handleQuickReply(state, id);
       const userInsert = await persist(state, [{ role: "user", content: label, kind: "text" }], {});
@@ -144,12 +141,12 @@ export function useChatbot() {
       setState(result.newState);
       setSending(false);
     },
-    [sessionId, state, persist, sending]
+    [clientId, state, persist, sending]
   );
 
   const sendText = useCallback(
     async (raw: string) => {
-      if (!sessionId || sending) return;
+      if (!clientId || sending) return;
       const text = raw.trim();
       if (!text) return;
       setSending(true);
@@ -160,7 +157,7 @@ export function useChatbot() {
       setState(result.newState);
       setSending(false);
     },
-    [sessionId, state, persist, sending]
+    [clientId, state, persist, sending]
   );
 
   return {
